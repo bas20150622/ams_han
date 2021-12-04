@@ -19,4 +19,5 @@ AMS han port dev area for Tibber pulse
 touch .env
 echo "TIBBER_TOKEN=##PASTE YOUR TOKEN FROM CLIPBOARD## >> .env
 ### Run tests
+- in your active environments, run "pytest"
 
