@@ -86,7 +86,7 @@ def main():
         loop.run_forever()
     finally:
         loop.close()
-        logging.info("Successfully shutdown the orderServer service.")
+        logging.info("Successfully shutdown the live measurements service.")
 
 
 if __name__ == "__main__":
