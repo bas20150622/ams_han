@@ -1,7 +1,7 @@
 from config import TIBBER_TOKEN
 import requests
 
-def test_connection():
+def test_notification():
     reqUrl = "https://api.tibber.com/v1-beta/gql"
 
     headersList = {

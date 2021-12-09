@@ -25,3 +25,7 @@ in your active environments:
 
         pytest
 
+### TODO
+- script to add home id to .env
+- DONE check to see if home is in .env
+
