@@ -18,14 +18,16 @@ AMS han port dev area for Tibber pulse
 - https://developer.tibber.com/settings/accesstoken
 - copy token to clipboard
 ### Create .env file
-        touch .env
-        echo "TIBBER_TOKEN=##PASTE YOUR TOKEN FROM CLIPBOARD## >> .env
+run following command in active environment:
+
+        python make_env.py
+
+when asked to add api token: **##PASTE YOUR TOKEN FROM CLIPBOARD##**
 ### Run tests
 in your active environments:
 
         pytest
 
 ### TODO
-- script to add home id to .env
-- DONE check to see if home is in .env
+
 

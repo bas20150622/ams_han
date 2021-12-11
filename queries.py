@@ -1,4 +1,4 @@
-# Collection of Tibber developer API queries
+# library for queries to Tibber pulse API
 from python_graphql_client import GraphqlClient
 from typing import Callable
 from config import TIBBER_TOKEN
