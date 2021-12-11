@@ -6,18 +6,13 @@ import logging
 from python_graphql_client import GraphqlClient
 import os
 from config import TIBBER_TOKEN
+from subscriptions import subscribe, livemeasurent_detailed_subscription
+from data_handlers import ValidSubscriptionData
+from typing import Callable
 
 
 class MyException(Exception):
     pass
-
-
-def print_handle(data):
-    print(
-        data["data"]["liveMeasurement"]["timestamp"]
-        + " "
-        + str(data["data"]["liveMeasurement"]["power"])
-    )
 
 
 def handle_exception(loop, context):
@@ -52,17 +47,7 @@ async def shutdown(loop, signal=None):
 def main():
     logging.basicConfig(level=logging.INFO)
 
-    client = GraphqlClient(endpoint="wss://api.tibber.com/v1-beta/gql/subscriptions")
-    query = """
-    subscription ($homeid: ID!){
-    liveMeasurement(homeId:$homeid){
-        timestamp
-        power
-    }
-    }
-    """
-
-    variables = {"homeid": os.getenv("HOME_ID")}
+    handler = ValidSubscriptionData()
 
     loop = asyncio.get_event_loop()
     loop.set_debug(True)
@@ -76,11 +61,9 @@ def main():
 
     try:
         loop.create_task(
-            client.subscribe(
-                query=query,
-                variables=variables,
-                headers={"Authorization": TIBBER_TOKEN},
-                handle=print_handle,
+            subscribe(
+                subscription_query=livemeasurent_detailed_subscription,
+                subscription_handler=handler.print,
             )
         )
         loop.run_forever()
