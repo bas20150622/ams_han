@@ -4,15 +4,17 @@ import time
 from functools import partial
 import logging
 from python_graphql_client import GraphqlClient
-import os
-from config import TIBBER_TOKEN
 from subscriptions import subscribe, livemeasurent_detailed_subscription
-from data_handlers import ValidSubscriptionData
+from schemas import liveMeasurementsDetailedSubscriptionSchema
 from typing import Callable
 
 
 class MyException(Exception):
     pass
+
+
+def print_data(data):
+    print(liveMeasurementsDetailedSubscriptionSchema().load(data))
 
 
 def handle_exception(loop, context):
@@ -47,7 +49,7 @@ async def shutdown(loop, signal=None):
 def main():
     logging.basicConfig(level=logging.INFO)
 
-    handler = ValidSubscriptionData()
+    # handler = RawSubscriptionData()
 
     loop = asyncio.get_event_loop()
     loop.set_debug(True)
@@ -63,7 +65,7 @@ def main():
         loop.create_task(
             subscribe(
                 subscription_query=livemeasurent_detailed_subscription,
-                subscription_handler=handler.print,
+                subscription_handler=print_data,
             )
         )
         loop.run_forever()

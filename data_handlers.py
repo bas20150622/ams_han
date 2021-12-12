@@ -1,3 +1,7 @@
+"""
+Module containing subscription data handlers
+Data handlers process the api subsciption message data and include mechanics for interpolation of historical data
+"""
 from abc import ABC, abstractmethod
 
 
@@ -52,6 +56,15 @@ class AbstractSubscriptionData(ABC):
     def _update(self, data: dict) -> dict:
         data = self._parse_data_from_model(data)
         data = self._process(data)
+        return data
+
+
+class RawSubscriptionData(AbstractSubscriptionData):
+    """
+    straight data passthrough
+    """
+
+    def _process(self, data: dict) -> dict:
         return data
 
 
